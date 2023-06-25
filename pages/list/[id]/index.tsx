@@ -17,15 +17,19 @@ export default function Books() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    (async () => {
-      const {
-        results: { books },
-      } = await (
-        await fetch(`https://books-api.nomadcoders.workers.dev/list?name=${id}`)
-      ).json();
-      setData(books);
-      setIsLoading(false);
-    })();
+    !id
+      ? router.push("/")
+      : (async () => {
+          const {
+            results: { books },
+          } = await (
+            await fetch(
+              `https://books-api.nomadcoders.workers.dev/list?name=${id}`
+            )
+          ).json();
+          setData(books);
+          setIsLoading(false);
+        })();
   }, []);
 
   return (
@@ -33,12 +37,14 @@ export default function Books() {
       <div className="main">
         {data.map((item: BooksDataProps, idx) => (
           <div key={idx} className="item">
-            <img src={item.book_image} width="100%" height="250" />
-            <div className="item__info">
-              <h1>{item.title}</h1>
-              <h3>{item.author}</h3>
-              <Link href={item.amazon_product_url}>Buy Now</Link>
-            </div>
+            <Link href={item.amazon_product_url} target="_blank">
+              <img src={item.book_image} width="100%" height="250" />
+              <div className="item__info">
+                <h1>{item.title}</h1>
+                <h3>{item.author}</h3>
+                Buy Now
+              </div>
+            </Link>
           </div>
         ))}
         <style jsx>
