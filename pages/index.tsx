@@ -23,14 +23,15 @@ export default function Index({ results }: { results: IndexDataProps[] }) {
               pathname: `/list/${item.list_name}`,
             }}
           >
-            <h1>{item.display_name}</h1>
+            <button>{item.display_name}</button>
           </Link>
         ))}
+
         <style jsx>
           {`
             .main {
               display: grid;
-              grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+              grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
               gap: 20px;
               max-width: 800px;
               margin: 0 auto;
@@ -46,23 +47,6 @@ export default function Index({ results }: { results: IndexDataProps[] }) {
               font-size: 1.5rem;
               font-weight: 600;
               text-align: center;
-            }
-
-            h1 {
-              font-size: 1rem;
-              cursor: pointer;
-              padding: 10px 20px;
-              border: 1px solid #ddd;
-              border-radius: 10px;
-              transition: all 0.3s ease-in-out;
-              &:hover {
-                background-color: #222;
-                color: white;
-              }
-            }
-
-            a {
-              text-decoration: none;
             }
           `}
         </style>

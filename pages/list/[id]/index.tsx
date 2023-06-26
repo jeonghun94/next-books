@@ -20,7 +20,7 @@ export default function Books({ books }: { books: BooksDataProps[] }) {
               <div className="item__info">
                 <h1>{item.title}</h1>
                 <h3>{item.author}</h3>
-                Buy Now
+                <button>Buy Now</button>
               </div>
             </Link>
           </div>
@@ -53,7 +53,7 @@ export default function Books({ books }: { books: BooksDataProps[] }) {
             }
 
             h3 {
-              font-size: 0.7rem;
+              font-size: 1rem;
               color: #66a3ff;
             }
 
