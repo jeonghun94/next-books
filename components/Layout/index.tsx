@@ -1,16 +1,14 @@
-import Loader from "./Loader";
-import NavBar from "./NavBar";
+import NavBar from "../NavBar";
 
 interface LayoutProps {
   children: React.ReactNode;
-  isLoading?: boolean;
 }
 
-export default function Layout({ children, isLoading }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <NavBar />
-      {isLoading ? <Loader /> : <>{children}</>}
+      {children}
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css?family=Patrick+Hand+SC");
         html,

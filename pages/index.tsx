@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 
@@ -11,25 +10,12 @@ interface IndexDataProps {
   updated: string;
 }
 
-export default function Index() {
-  const [data, setData] = useState<IndexDataProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      const { results } = await (
-        await fetch("https://books-api.nomadcoders.workers.dev/lists")
-      ).json();
-      setData(results);
-      setIsLoading(false);
-    })();
-  }, []);
-
+export default function Index({ results }: { results: IndexDataProps[] }) {
   return (
-    <Layout isLoading={isLoading}>
+    <Layout>
       <div className="main">
         <p>The New York Times Best Seller Explorer</p>
-        {data.map((item: IndexDataProps, idx) => (
+        {results.map((item: IndexDataProps, idx) => (
           <Link
             key={idx}
             className="item"
@@ -84,3 +70,15 @@ export default function Index() {
     </Layout>
   );
 }
+
+export const getServerSideProps = async function () {
+  const { results } = await (
+    await fetch("https://books-api.nomadcoders.workers.dev/lists")
+  ).json();
+
+  return {
+    props: {
+      results,
+    },
+  };
+};

@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { NextPageContext } from "next";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 
@@ -10,32 +9,11 @@ interface BooksDataProps {
   title: string;
 }
 
-export default function Books() {
-  const router = useRouter();
-  const { id } = router.query;
-  const [data, setData] = useState<BooksDataProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    !id
-      ? router.push("/")
-      : (async () => {
-          const {
-            results: { books },
-          } = await (
-            await fetch(
-              `https://books-api.nomadcoders.workers.dev/list?name=${id}`
-            )
-          ).json();
-          setData(books);
-          setIsLoading(false);
-        })();
-  }, []);
-
+export default function Books({ books }: { books: BooksDataProps[] }) {
   return (
-    <Layout isLoading={isLoading}>
+    <Layout>
       <div className="main">
-        {data.map((item: BooksDataProps, idx) => (
+        {books.map((item: BooksDataProps, idx) => (
           <div key={idx} className="item">
             <Link href={item.amazon_product_url} target="_blank">
               <img src={item.book_image} width="100%" height="250" />
@@ -97,3 +75,18 @@ export default function Books() {
     </Layout>
   );
 }
+
+export const getServerSideProps = async function ({ query }: NextPageContext) {
+  const { id } = query;
+  const {
+    results: { books },
+  } = await (
+    await fetch(`https://books-api.nomadcoders.workers.dev/list?name=${id}`)
+  ).json();
+
+  return {
+    props: {
+      books,
+    },
+  };
+};
