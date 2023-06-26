@@ -23,7 +23,7 @@ export default function Index({ results }: { results: IndexDataProps[] }) {
               pathname: `/list/${item.list_name}`,
             }}
           >
-            <button>{item.display_name}</button>
+            <button>{`${item.display_name}`}</button>
           </Link>
         ))}
 
@@ -38,14 +38,13 @@ export default function Index({ results }: { results: IndexDataProps[] }) {
               box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
               height: 100%;
               background-color: white;
-              padding: 30px 50px;
+              padding: 0px 50px;
             }
 
             p {
-              width: 100%;
               grid-column: 1 / -1;
-              font-size: 1.5rem;
-              font-weight: 600;
+              font-size: 2.5rem;
+              font-weight: bold;
               text-align: center;
             }
           `}
